@@ -34,13 +34,13 @@ public class CentralArea {
         }
     }
 
-
     public static CentralArea getINSTANCE(){
         if(INSTANCE == null){
             INSTANCE = new CentralArea();
         }
         return INSTANCE;
     }
+
     public static void main(String[] args){
         CentralArea.getINSTANCE();
         System.out.println(CentralArea.centralAreaPos == null);

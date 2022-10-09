@@ -2,6 +2,7 @@ package uk.ac.ed.inf;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 
 public class LngLat {
@@ -14,6 +15,7 @@ public class LngLat {
         this.lng = lng;
         this.lat = lat;
     }
+
 
     public enum CompassDirection{
         E(0),
@@ -43,42 +45,52 @@ public class LngLat {
         }
     }
 
-    public static boolean inCentralArea(){
+    public boolean inCentralArea(){
+        LngLat[] centralAreaPos = CentralArea.centralAreaPos;
+        for(int i=0; i<=centralAreaPos.length; i++){
+            LngLat point1 = centralAreaPos[i];
+            LngLat point2 = centralAreaPos[i+1];
+
+            double distance = (point2.lng - point1.lng) * (this.lat - point1.lat) - (this.lng - point1.lng) * (point2.lat - point1.lat);
+
+
+        }
         return true;
     }
 
-    public double distanceTo (LngLat pos1, LngLat pos2){
-        double lng1 = pos1.lng-pos2.lng;
-        double lat1 = pos1.lat-pos2.lat;
+    public double distanceTo (LngLat pos){
+        double lng1 = pos.lng-this.lng;
+        double lat1 = pos.lat-this.lat;
         double PythagoreanDis = Math.sqrt(lng1*lng1 + lat1*lat1);
 
         return PythagoreanDis;
     }
 
-    public boolean closeTo (LngLat pos1, LngLat pos2){
-        return distanceTo(pos1, pos2) < 0.00015;
+    public boolean closeTo (LngLat pos){
+        return distanceTo(pos) < 0.00015;
     }
 
-    public LngLat nextPosition(CompassDirection direction, LngLat currentPos){
-        LngLat newPos = currentPos;
 
-        if (direction.getVal() == 0){
-            newPos.lng = currentPos.lng + 0.00015;
-        }
-        else if (direction.getVal() == 90){
-            newPos.lat = currentPos.lat + 0.00015;
-        }
-        else if (direction.getVal() == 180){
-            newPos.lng = currentPos.lng - 0.00015;
-        }
-        else if (direction.getVal() == 270){
-            newPos.lat = currentPos.lat - 0.00015;
-        }
-        else if(direction.getVal() < 90 && direction.getVal() > 0){
-            newPos.lat = currentPos.lat + Math.sin(direction.getVal())/(Math.sin(90)/0.00015);
-            double angle = 180-90-direction.getVal();
-            newPos.lng = currentPos.lng + Math.sin(angle)/(Math.sin(90)/0.00015);
-        }
-        return newPos;
-    }
+//    public LngLat nextPosition(CompassDirection direction, LngLat currentPos){
+//        LngLat newPos = currentPos;
+//
+//        if (direction.getVal() == 0){
+//            newPos.lng = currentPos.lng + 0.00015;
+//        }
+//        else if (direction.getVal() == 90){
+//            newPos.lat = currentPos.lat + 0.00015;
+//        }
+//        else if (direction.getVal() == 180){
+//            newPos.lng = currentPos.lng - 0.00015;
+//        }
+//        else if (direction.getVal() == 270){
+//            newPos.lat = currentPos.lat - 0.00015;
+//        }
+//        else if(direction.getVal() < 90 && direction.getVal() > 0){
+//            newPos.lat = currentPos.lat + Math.sin(direction.getVal())/(Math.sin(90)/0.00015);
+//            double angle = 180-90-direction.getVal();
+//            newPos.lng = currentPos.lng + Math.sin(angle)/(Math.sin(90)/0.00015);
+//        }
+//        return newPos;
+//    }
 }
