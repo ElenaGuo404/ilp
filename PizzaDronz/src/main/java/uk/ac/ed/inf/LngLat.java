@@ -46,16 +46,31 @@ public class LngLat {
     }
 
     public boolean inCentralArea(){
+
         LngLat[] centralAreaPos = CentralArea.centralAreaPos;
-        for(int i=0; i<=centralAreaPos.length; i++){
+        boolean threeEdges = true;
+        boolean lastEdge = true;
+
+        LngLat point0 = centralAreaPos[0];
+        LngLat point3 = centralAreaPos[3];
+
+        if ((point0.lng - point3.lng) * (this.lat - point3.lat) - (this.lng - point3.lng) * (point0.lat - point3.lat) < 0){
+            lastEdge = false;
+        }
+
+        for(int i=0;i < centralAreaPos.length-1;i++){
+
             LngLat point1 = centralAreaPos[i];
             LngLat point2 = centralAreaPos[i+1];
 
             double distance = (point2.lng - point1.lng) * (this.lat - point1.lat) - (this.lng - point1.lng) * (point2.lat - point1.lat);
 
-
+            if (distance < 0) {
+                threeEdges = false;
+            }
         }
-        return true;
+
+        return threeEdges && lastEdge;
     }
 
     public double distanceTo (LngLat pos){
@@ -70,27 +85,13 @@ public class LngLat {
         return distanceTo(pos) < 0.00015;
     }
 
+    public LngLat nextPosition(CompassDirection direction) {
+        double lng = this.lng + 0.00015 * Math.sin(Math.toRadians(direction.getVal()));
+        double lat = this.lat + 0.00015 * Math.cos(Math.toRadians(direction.getVal()));
 
-//    public LngLat nextPosition(CompassDirection direction, LngLat currentPos){
-//        LngLat newPos = currentPos;
-//
-//        if (direction.getVal() == 0){
-//            newPos.lng = currentPos.lng + 0.00015;
-//        }
-//        else if (direction.getVal() == 90){
-//            newPos.lat = currentPos.lat + 0.00015;
-//        }
-//        else if (direction.getVal() == 180){
-//            newPos.lng = currentPos.lng - 0.00015;
-//        }
-//        else if (direction.getVal() == 270){
-//            newPos.lat = currentPos.lat - 0.00015;
-//        }
-//        else if(direction.getVal() < 90 && direction.getVal() > 0){
-//            newPos.lat = currentPos.lat + Math.sin(direction.getVal())/(Math.sin(90)/0.00015);
-//            double angle = 180-90-direction.getVal();
-//            newPos.lng = currentPos.lng + Math.sin(angle)/(Math.sin(90)/0.00015);
-//        }
-//        return newPos;
-//    }
+        LngLat newPos = new LngLat(lng,lat);
+
+        return newPos;
+    }
+
 }

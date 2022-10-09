@@ -20,7 +20,6 @@ public class CentralArea {
         String echoBasis = "centralArea";
 
         try{
-            //URL url = new URL(baseUrl + echoBasis);
             centralAreaPos = new ObjectMapper().readValue(
                     new URL(baseUrl + echoBasis) , LngLat[]. class );
         } catch (StreamReadException e) {
@@ -41,9 +40,9 @@ public class CentralArea {
         return INSTANCE;
     }
 
-    public static void main(String[] args){
-        CentralArea.getINSTANCE();
-        System.out.println(CentralArea.centralAreaPos == null);
-    }
+//    public static void main(String[] args){
+//        CentralArea.getINSTANCE();
+//        System.out.println(CentralArea.centralAreaPos == null);
+//    }
 
 }
