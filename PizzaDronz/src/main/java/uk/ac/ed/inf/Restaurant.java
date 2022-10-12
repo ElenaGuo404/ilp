@@ -1,5 +1,6 @@
 package uk.ac.ed.inf;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.databind.DatabindException;
@@ -9,13 +10,25 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
+
+/**
+ * Restaurant class is used to present the participating restaurant from REST-request.
+ */
+
 public class Restaurant {
+
+    /**
+     * The fields listRestaurants to cover the participating restaurant from REST-request;
+     * menu to cover individual restaurant's menu;
+     * name of individual restaurant.
+     */
     public static Restaurant[] listRestaurants;
     public Menu[] menu;
     public String name;
 
     public Menu[] getMenu(){
-        return menu;
+        return this.menu;
     }
 
     public Restaurant(@JsonProperty("name") String name,
@@ -24,13 +37,17 @@ public class Restaurant {
         this.menu = menu;
     }
 
+    /**
+     * This method is used to get all participating restaurants from REST request, including their menus.
+     *
+     * @param serverBaseAddress An url link giving information of participating restaurants.
+     * @return list of participating restaurants
+     */
     public static Restaurant[] getRestaurantsFromRestServer(URL serverBaseAddress){
-//        String baseUrl = "https://ilp-rest.azurewebsites.net/";
-//        String echoBasis = "restaurants";
 
         try{
             listRestaurants = new ObjectMapper().readValue(
-                    new URL(serverBaseAddress) , Restaurant[]. class );
+                    serverBaseAddress , Restaurant[].class );
         } catch (StreamReadException e) {
             e.printStackTrace();
         } catch (MalformedURLException e) {
@@ -48,6 +65,8 @@ public class Restaurant {
         Restaurant [] participants = Restaurant.getRestaurantsFromRestServer(
                 new URL("https://ilp-rest.azurewebsites.net/restaurants"));
 
-        System.out.println(participants.length);
+        for (Menu m: participants[0].getMenu()) {
+            System.out.println(m.name);
+        }
     }
 }

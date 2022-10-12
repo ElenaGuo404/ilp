@@ -10,18 +10,28 @@ import java.net.MalformedURLException;
 import java.net.URL;
 @JsonIgnoreProperties(ignoreUnknown = true)
 
+/**
+ * CentralArea is a singleton access pattern class.
+ * It creates the object by reading data from REST-service.
+ */
 
 public class CentralArea {
+
+    /**
+     * The field is used to cover the corner positions of this central area.
+     * The INSTANCE to control the class.
+     */
     private static CentralArea INSTANCE;
     public static LngLat[] centralAreaPos;
 
     private CentralArea(){
-        String baseUrl = "https://ilp-rest.azurewebsites.net/";
+
+
         String echoBasis = "centralArea";
 
         try{
             centralAreaPos = new ObjectMapper().readValue(
-                    new URL(baseUrl + echoBasis) , LngLat[]. class );
+                    new URL("https://ilp-rest.azurewebsites.net/" + echoBasis) , LngLat[]. class );
         } catch (StreamReadException e) {
             e.printStackTrace();
         } catch (MalformedURLException e) {

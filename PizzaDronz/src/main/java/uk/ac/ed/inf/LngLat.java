@@ -5,7 +5,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 
+/**
+ * LngLat is a base class for all coordinates contexts
+ * which allows the given position;s coordinate to be shown.
+ */
+
 public class LngLat {
+
+    /**
+     * The field lng and lat are used to present the longitudes and latitudes of a given coordinate.
+     */
 
     public double lng;
     public double lat;
@@ -17,34 +26,12 @@ public class LngLat {
     }
 
 
-    public enum CompassDirection{
-        E(0),
-        ENE(22.5),
-        NE(45),
-        NNE(67.5),
-        N(90),
-        NNW(112.5),
-        NW(135),
-        WNW(157.5),
-        W(180),
-        WSW(202.5),
-        SW(225),
-        SSW(247.5),
-        S(270),
-        SSE(292.5),
-        SE(315),
-        ESE(337.5);
-
-        private final double value;
-
-        CompassDirection(double value) {
-            this.value = value;
-        }
-        public double getVal() {
-            return value;
-        }
-    }
-
+    /**
+     * This method has no parameter,
+     * and it is used to check if the given coordinate's location are inside the central area.
+     *
+     * @return A boolean value that uses 'true' to present the input coordinate are inside the central are, vice versa.
+     */
     public boolean inCentralArea(){
 
         LngLat[] centralAreaPos = CentralArea.centralAreaPos;
@@ -73,7 +60,17 @@ public class LngLat {
         return threeEdges && lastEdge;
     }
 
+    /**
+     * This method is used to get the pythagorean distance between current position and its target.
+     *
+     * @param pos Target position with LngLat format.
+     * @return A double value of pythagorean distance between two points.
+     */
+
     public double distanceTo (LngLat pos){
+        if (pos == null){
+            System.err.println("Invalid input position.");
+        }
         double lng1 = pos.lng-this.lng;
         double lat1 = pos.lat-this.lat;
         double PythagoreanDis = Math.sqrt(lng1*lng1 + lat1*lat1);
@@ -81,11 +78,36 @@ public class LngLat {
         return PythagoreanDis;
     }
 
+    /**
+     * This method is used to check whether the input position and this current position is close or not.
+     *
+     * @param pos Target position with LngLat format.
+     * @return A boolean value uses 'true' to indicate the points are close to each other.
+     */
+
     public boolean closeTo (LngLat pos){
-        return distanceTo(pos) < 0.00015;
+        if (pos == null){
+            System.err.println("Invalid input position.");
+        }
+        else if (distanceTo(pos) < 0){
+            System.err.println("The distance cannot smaller than 0");
+        }
+        else if (distanceTo(pos) < 0.00015){
+            return true;
+        }
+        return false;
     }
 
+    /**
+     * This method is used to get this new position of the drone if it makes a move.
+     *
+     * @param direction A compass direction that has angle value by using enum format.
+     * @return New coordinate of the drone in LngLat format.
+     */
     public LngLat nextPosition(CompassDirection direction) {
+        if (direction == null){
+            return this;
+        }
         double lng = this.lng + 0.00015 * Math.sin(Math.toRadians(direction.getVal()));
         double lat = this.lat + 0.00015 * Math.cos(Math.toRadians(direction.getVal()));
 
