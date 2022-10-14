@@ -24,8 +24,8 @@ public enum CompassDirection {
 
     private final double value;
 
-    CompassDirection(double angle) {
-        this.value = angle;
+    CompassDirection(double value) {
+        this.value = value;
     }
     public double getVal() {
         return value;

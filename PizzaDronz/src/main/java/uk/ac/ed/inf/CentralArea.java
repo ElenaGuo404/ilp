@@ -8,12 +8,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-@JsonIgnoreProperties(ignoreUnknown = true)
 
 /**
  * CentralArea is a singleton access pattern class.
  * It creates the object by reading data from REST-service.
  */
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 
 public class CentralArea {
 
@@ -43,16 +44,16 @@ public class CentralArea {
         }
     }
 
+    /**
+     * This method is used to generate instance for central area.
+     *
+     * @return instance of central area
+     */
     public static CentralArea getINSTANCE(){
         if(INSTANCE == null){
             INSTANCE = new CentralArea();
         }
         return INSTANCE;
     }
-
-//    public static void main(String[] args){
-//        CentralArea.getINSTANCE();
-//        System.out.println(CentralArea.centralAreaPos == null);
-//    }
 
 }

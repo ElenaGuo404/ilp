@@ -8,7 +8,7 @@ package uk.ac.ed.inf;
 public class InvalidPizzaCombinationException extends RuntimeException{
 
     /**
-     * @param message Text messages when error produced in String format.
+     * @param message Text messages produced when error occur in String format.
      */
     public InvalidPizzaCombinationException (String message){
         super(message);

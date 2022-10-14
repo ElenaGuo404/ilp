@@ -10,11 +10,11 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-
 /**
  * Restaurant class is used to present the participating restaurant from REST-request.
  */
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 
 public class Restaurant {
 
@@ -27,6 +27,11 @@ public class Restaurant {
     public Menu[] menu;
     public String name;
 
+    /**
+     * This method is used to get restaurant's menu.
+     *
+     * @return menu object as an array.
+     */
     public Menu[] getMenu(){
         return this.menu;
     }
@@ -58,15 +63,5 @@ public class Restaurant {
             e.printStackTrace();
         }
         return listRestaurants ;
-    }
-
-    public static void main(String[] args) throws MalformedURLException {
-
-        Restaurant [] participants = Restaurant.getRestaurantsFromRestServer(
-                new URL("https://ilp-rest.azurewebsites.net/restaurants"));
-
-        for (Menu m: participants[0].getMenu()) {
-            System.out.println(m.name);
-        }
     }
 }

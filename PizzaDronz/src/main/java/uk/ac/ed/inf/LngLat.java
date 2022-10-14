@@ -3,12 +3,12 @@ package uk.ac.ed.inf;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-
 /**
  * LngLat is a base class for all coordinates contexts
  * which allows the given position;s coordinate to be shown.
  */
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 
 public class LngLat {
 
@@ -19,6 +19,12 @@ public class LngLat {
     public double lng;
     public double lat;
 
+    /**
+     * Create coordinate for the given position.
+     *
+     * @param lng the longitude of coordinate
+     * @param lat the latitude of coordinate
+     */
     public LngLat (@JsonProperty("longitude")double lng,
                    @JsonProperty("latitude")double lat){
         this.lng = lng;
@@ -41,7 +47,8 @@ public class LngLat {
         LngLat point0 = centralAreaPos[0];
         LngLat point3 = centralAreaPos[3];
 
-        if ((point0.lng - point3.lng) * (this.lat - point3.lat) - (this.lng - point3.lng) * (point0.lat - point3.lat) < 0){
+        if ((point0.lng - point3.lng) * (this.lat - point3.lat)
+                - (this.lng - point3.lng) * (point0.lat - point3.lat) < 0){
             lastEdge = false;
         }
 
@@ -50,7 +57,8 @@ public class LngLat {
             LngLat point1 = centralAreaPos[i];
             LngLat point2 = centralAreaPos[i+1];
 
-            double distance = (point2.lng - point1.lng) * (this.lat - point1.lat) - (this.lng - point1.lng) * (point2.lat - point1.lat);
+            double distance = (point2.lng - point1.lng) * (this.lat - point1.lat)
+                    - (this.lng - point1.lng) * (point2.lat - point1.lat);
 
             if (distance < 0) {
                 threeEdges = false;
@@ -59,6 +67,7 @@ public class LngLat {
 
         return threeEdges && lastEdge;
     }
+
 
     /**
      * This method is used to get the pythagorean distance between current position and its target.
@@ -104,15 +113,19 @@ public class LngLat {
      * @param direction A compass direction that has angle value by using enum format.
      * @return New coordinate of the drone in LngLat format.
      */
+
     public LngLat nextPosition(CompassDirection direction) {
+        LngLat newPos;
+
         if (direction == null){
             return this;
         }
-        double lng = this.lng + 0.00015 * Math.sin(Math.toRadians(direction.getVal()));
-        double lat = this.lat + 0.00015 * Math.cos(Math.toRadians(direction.getVal()));
+        else {
+            double lng = this.lng + 0.00015 * Math.cos(Math.toRadians(direction.getVal()));
+            double lat = this.lat + 0.00015 * Math.sin(Math.toRadians(direction.getVal()));
 
-        LngLat newPos = new LngLat(lng,lat);
-
+            newPos = new LngLat(lng, lat);
+        }
         return newPos;
     }
 
