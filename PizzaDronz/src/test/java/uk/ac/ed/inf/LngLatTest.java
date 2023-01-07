@@ -1,32 +1,90 @@
 package uk.ac.ed.inf;
 
+import junit.framework.Test;
 import junit.framework.TestCase;
+import junit.framework.TestSuite;
+import uk.ac.ed.inf.domain.CompassDirection;
+import uk.ac.ed.inf.domain.LngLat;
+import uk.ac.ed.inf.domain.NoFlyZone;
+import uk.ac.ed.inf.service.CentralAreaService;
+import uk.ac.ed.inf.service.NoFlyZoneService;
+import uk.ac.ed.inf.service.OrderService;
+import uk.ac.ed.inf.service.RestaurantService;
+
+import java.util.Arrays;
+
+import static org.junit.Assert.assertNotEquals;
 
 public class LngLatTest extends TestCase {
 
-    public void testInCentralArea() {
-        LngLat kfc = new LngLat(-3.184319, 55.946233);
-        LngLat newPos = kfc.nextPosition(CompassDirection.N);
-        LngLat hill = new LngLat(-3.192473, 55.946233);
-        LngLat Meadows = new LngLat(-3.192473, 55.942617);
-        LngLat busStop = new LngLat(-3.184319, 55.942617);
-        LngLat random1 = new LngLat(-3.19,55.95);
-        LngLat random2 = new LngLat(-3.193,55.945);
-        LngLat random3 = new LngLat(-3.19, 55.93);
-        LngLat random4 = new LngLat(-3.18,55.93);
+    private LngLat p1;
+    private LngLat p2;
+    private LngLat p3;
+    private LngLat p4;
+    private LngLat[] noFlyZoneList;
 
-        CentralArea.getINSTANCE();
-        System.out.println(kfc.inCentralArea());
-        System.out.println(hill.inCentralArea());
-        System.out.println(Meadows.inCentralArea());
-        System.out.println(busStop.inCentralArea());
+    public LngLatTest(String testName){
+        super(testName);
+    }
 
-        System.out.println(random1.inCentralArea());
-        System.out.println(random2.inCentralArea());
-        System.out.println(random3.inCentralArea());
-        System.out.println(random4.inCentralArea());
-        System.out.println(newPos.inCentralArea());
+    @Override
+    protected void setUp() throws Exception{
+        OrderService.init("https://ilp-rest.azurewebsites.net","2023-01-01");
+        RestaurantService.init("https://ilp-rest.azurewebsites.net");
+        NoFlyZoneService.init("https://ilp-rest.azurewebsites.net");
+        CentralAreaService.init("https://ilp-rest.azurewebsites.net");
+
+        p1 = new LngLat(-3.18,55.93); //random point not inside/near any zones
+        p2 = new LngLat(-3.19,55.95);
+        p3 = new LngLat(-3.184319, 55.946233); //corner coordinate of central area
+        p4 = new LngLat(-3.190,55.9438); //inside no-fly zone
 
     }
+
+    public void testInArea() {
+        assertTrue(p1.inArea(p4,CentralAreaService.getCentralAreaPos()));
+        assertFalse(p1.inArea(p1,CentralAreaService.getCentralAreaPos()));
+
+        int count = 0;
+        for (NoFlyZone zone : NoFlyZoneService.getZoneList()){
+            assertFalse(p1.inArea(p1,zone.noFlyZoneConverter()));
+            if (p1.inArea(p4, zone.noFlyZoneConverter())){
+                count += 1;
+            }
+            assertEquals(1,count);
+        }
+    }
+
+    public void testDistanceTo(){
+        double dis = Math.sqrt((p1.getLng() - p4.getLng())*(p1.getLng() - p4.getLng())
+                + (p1.getLat() - p4.getLat())*(p1.getLat() - p4.getLat()));
+
+        assertEquals(dis,p4.distanceTo(p1));
+    }
+    public void testCloseTo(){
+        p1 = new LngLat(-3.19,55.95014);
+
+        assertTrue(p1.closeTo(p2));
+        assertFalse(p1.closeTo(p4));
+    }
+
+    public void testNextPosition(){
+        p1 = new LngLat(-3.18,55.93);
+        p2 = new LngLat(-3.18,55.93015);
+
+        assertEquals(p2.getLat(), p1.nextPosition(CompassDirection.N).getLat());
+        assertNotEquals(p1.nextPosition(CompassDirection.S).getLat(), p2.getLat());
+    }
+
+    public void testAvailableNeighbours(){
+        int count = 0;
+        p2 = new LngLat(-3.190578818321228,55.9439);
+        count = p2.availableNeighbours().size();
+
+        assertNotEquals(count,16);
+        assertEquals(p1.availableNeighbours().size(),16);
+
+    }
+
 }
 
