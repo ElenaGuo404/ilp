@@ -195,7 +195,7 @@ public class Order {
      *
      * @return order price in Integer format
      */
-    public Integer getPriceTotalInPence() {
+    public int getPriceTotalInPence() {
         return priceTotalInPence;
     }
 
