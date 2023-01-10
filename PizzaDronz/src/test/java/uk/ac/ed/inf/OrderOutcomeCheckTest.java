@@ -4,13 +4,10 @@ import junit.framework.TestCase;
 import uk.ac.ed.inf.domain.Order;
 import uk.ac.ed.inf.domain.OrderOutcome;
 import uk.ac.ed.inf.domain.OrderOutcomeCheck;
-import uk.ac.ed.inf.domain.Restaurant;
 import uk.ac.ed.inf.service.CentralAreaService;
 import uk.ac.ed.inf.service.NoFlyZoneService;
 import uk.ac.ed.inf.service.OrderService;
 import uk.ac.ed.inf.service.RestaurantService;
-
-import java.util.List;
 
 public class OrderOutcomeCheckTest extends TestCase {
 

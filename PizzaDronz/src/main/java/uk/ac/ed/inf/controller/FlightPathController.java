@@ -70,6 +70,7 @@ public class FlightPathController {
         for (int i = 0; i < path.getPathStartToEnd().size()-1; i++) {
             float fromLongitude = (float) path.getPathStartToEnd().get(i).getLng();
             float fromLatitude = (float) path.getPathStartToEnd().get(i).getLat();
+
             float angle = path.getAngleStartToEnd().get(i).floatValue();
             float toLongitude = (float) path.getPathStartToEnd().get(i + 1).getLng();
             float toLatitude = (float) path.getPathStartToEnd().get(i + 1).getLat();
