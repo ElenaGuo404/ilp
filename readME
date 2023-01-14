@@ -1,0 +1,20 @@
+This project is the completed version from course - Informatics Large Practical. The project is written in Java 18 with Maven dependecy. 
+The system is designed for drone to deliver daily orders that are made by students from Univeristy of Edinburgh. 
+There are only 1 drone responsible for all deliveries with 2000 unit of battery. The aim of this project is to complete as many order as possible. 
+There are 3 packages under 'main" and a separate java file 'App' to run the whole system.
+
+1. service
+There are 4 java files under this package. They are used as data reader to read data from the REST-Server.
+The data includes Orders that are made by students from Univeristy of Edinburgh today. 
+The participating restaruants's basic information, such as name, location and its menu.
+The location of central areas and no-fly zones. 
+
+2. domain
+There are 13 java files under this package. It has methods of route-planning for drone under restriction of no-fly zones,
+and filtering any invalid orders to ensure every orders are valid for deliveries.
+
+3.controller
+There are 3 files under this package. It uses methods from domain packages to complete the daily system operation,
+such as daily drone flightpath, daily orders that are able for deliveries and daily drone movemnt. 
+The system are able to sort the orders in ascending orders based on their length of flightpath and keep track the drone's battery 
+to ensure the remaining battery are enough to complete the order. 
