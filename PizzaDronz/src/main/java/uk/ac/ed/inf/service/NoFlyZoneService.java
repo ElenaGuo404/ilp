@@ -18,7 +18,7 @@ public class NoFlyZoneService {
     private static NoFlyZoneService INSTANCE;
     private static NoFlyZone[] zones;
 
-      NoFlyZoneService(String serverBaseAddress){
+    public NoFlyZoneService(String serverBaseAddress){
 
         String echoBasis = "/noFlyZones";
 

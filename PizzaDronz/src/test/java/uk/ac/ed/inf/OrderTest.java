@@ -25,7 +25,7 @@ public class OrderTest extends TestCase {
     protected List<String> listPizzas2;
 
     @Override
-    protected void setUp() throws Exception{
+    protected void setUp(){
         OrderService.init("https://ilp-rest.azurewebsites.net","2023-01-01");
         RestaurantService.init("https://ilp-rest.azurewebsites.net");
         NoFlyZoneService.init("https://ilp-rest.azurewebsites.net");

@@ -128,7 +128,6 @@ public class Path {
             pathEndToStart.add(nextPosition);
             current = nextPosition;
         }
-
     }
 
     /**

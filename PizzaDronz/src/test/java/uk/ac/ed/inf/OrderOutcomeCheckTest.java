@@ -16,11 +16,12 @@ public class OrderOutcomeCheckTest extends TestCase {
     }
 
     protected Order order1;
+    protected Order[] orders;
     protected OrderOutcomeCheck check;
 
 
     @Override
-    protected void setUp() throws Exception{
+    protected void setUp(){
         OrderService.init("https://ilp-rest.azurewebsites.net","2023-01-01");
         RestaurantService.init("https://ilp-rest.azurewebsites.net");
         NoFlyZoneService.init("https://ilp-rest.azurewebsites.net");
@@ -69,10 +70,30 @@ public class OrderOutcomeCheckTest extends TestCase {
         assertTrue(check.InvalidPizzaCombinationMultipleSuppliers());
     }
 
-    public void testAssignOrderOutcome(){
+    public void testAssignOrderOutcomeTrueCase(){
+        orders = OrderService.getListOrders();
+        int count = 0;
+        for (Order order : orders){
+            check = new OrderOutcomeCheck(order);
+            check.assignOrderOutcome();
+            if (order.outcome == OrderOutcome.ValidButNotDelivered){
+                count += 1;
+            }
+        }
         order1 = OrderService.getListOrders()[7];
-        check = new OrderOutcomeCheck(order1);
-        check.assignOrderOutcome();
+        assertEquals(47,orders.length);
+        assertEquals(40, count);
         assertEquals(OrderOutcome.ValidButNotDelivered,order1.outcome);
     }
+
+    public void testAssignOrderOutcomeFalseCase(){
+        Order order1 = null;
+        try {
+            check = new OrderOutcomeCheck(order1);
+            check.assignOrderOutcome();
+        }catch (NullPointerException e){
+            assertNotNull(e);
+        }
+    }
+
 }

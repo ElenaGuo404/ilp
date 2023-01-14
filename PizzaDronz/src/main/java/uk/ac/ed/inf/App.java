@@ -14,10 +14,11 @@ import uk.ac.ed.inf.service.RestaurantService;
  */
 public class App {
 
+    //args[0] = "2023-01-01"
+    //args[1] =  "https://ilp-rest.azurewebsites.net"
     public static void main( String[] args ) {
 
         if (ArgumentCheck.validTime(args[0]) && ArgumentCheck.validUrl(args[1])) {
-
 
             OrderService.init(args[1], args[0]);
             RestaurantService.init(args[1]);
