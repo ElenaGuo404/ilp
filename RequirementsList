@@ -1,0 +1,57 @@
+Functional Requirements
+-	Safety
+Goal: Drone can complete the delivery without cause any damages
+1.	The drone must avoid crushes to buildings.
+2.	The attachments between delivery box and the drone must be strong.
+3.	The drone must not enter the no-fly zone.
+4.	The drone must carry between 1 and 4 pizzas in a single delivery.
+5.	The drone must not take any deliveries if the remaining battery is not enough to complete it.
+
+-	Correctness
+Goal: Drone can complete the delivery without cause any errors.
+1.	Once the drone enters the central area, it must not leave until it delivers current order, to avoid cause any false deliveries.
+2.	The drone must not fly in arbitrary direction, it has to be one of the 16 compass directions.
+3.	The drone must hover for one move once when it reaches its current destination, i.e., target restaurant and drop point on Appleton Tower.
+4.	The drone must be launched and return to the top of Appleton Tower every day.
+5.	The drone must have an angle of null when hovering.
+6.	The drone must have every move when flying is a straight line of length 0.00015 degrees.
+7.	The drone must be able to navigate and find path to its target destination.
+8.  The drone should use order number - “no-order” when the drone is making the flight back to the top of the Appleton Tower when all of the day’s orders have been delivered.
+9.  The drone has at most 2000 moves before it runs out of battery.
+10. The system should have a fixed delivery cost – £1 apply to every order.
+11. The system should be able to filter any invalid orders.
+12. The delivered order should have order outcome stated “delivered”.
+
+-	Liveness
+Goal: System can handle and respond to the delivery requests in a timely manner.
+1.  The
+
+
+Measurable Quality Attributes
+-	Resilience
+1.  The system should close under extreme weather.
+2.  The drone should be able to perform well under the general environment and handle extreme weather for a safe landing.
+
+-  Performance
+1.  Response Time: The system should have a response time of 60s or less for plan and plot drone daily flightpath.
+3.  Memory usage: The amount of memory the system uses to generate daily files should keep low.
+
+-  Reliability
+1.  Mean time between failures (MTBF): average time between system failures should be recorded and used for future analyse.
+2.  Availability: The percentage of time that the system is available for delivery.
+
+-   Cost Effectiveness
+1.  Repair: The drone should try to avoid most event to prevent damages.
+
+Qualitative Requirement
+-   Accessibility
+1.  The system shall able to use by everyone, including students with disabilities.
+
+-   Maintainability
+1.  The system shall be well-structured, so is maintainable for future.
+
+-   Usability
+1.  The system shall be easy to use.
+
+-  Efficiency
+1.  The system shall find optimal delivery path to maximize efficiency to satisfy most consumers' needs.
