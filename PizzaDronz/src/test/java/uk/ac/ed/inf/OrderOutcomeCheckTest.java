@@ -9,6 +9,9 @@ import uk.ac.ed.inf.service.NoFlyZoneService;
 import uk.ac.ed.inf.service.OrderService;
 import uk.ac.ed.inf.service.RestaurantService;
 
+/**
+ * Unit and Integration testing checks individual case and the whole order outcome assigning module
+ */
 public class OrderOutcomeCheckTest extends TestCase {
 
     public OrderOutcomeCheckTest(String testName){

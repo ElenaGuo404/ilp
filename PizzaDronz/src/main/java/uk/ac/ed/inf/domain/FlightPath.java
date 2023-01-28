@@ -8,7 +8,7 @@ public class FlightPath {
     /**
      * The fields present individual order's order number and its path's movement, direction and time for move.
      */
-    protected String orderNo;
+    private final String orderNo;
     private final float fromLongitude;
     private final float fromLatitude;
     protected final float angle;
@@ -45,4 +45,7 @@ public class FlightPath {
         return fromLatitude;
     }
 
+    public String getOrderNo() {
+        return orderNo;
+    }
 }

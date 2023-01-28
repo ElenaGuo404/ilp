@@ -12,6 +12,9 @@ import uk.ac.ed.inf.domain.Restaurant;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Unit Testing for Order class
+ */
 public class OrderTest extends TestCase {
 
     public OrderTest(String testName){

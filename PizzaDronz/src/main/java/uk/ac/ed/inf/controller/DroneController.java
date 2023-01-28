@@ -63,4 +63,8 @@ public class DroneController {
             e.printStackTrace();
         }
     }
+
+    public static FeatureCollection getFeatureCollection(){
+        return featureCollection;
+    }
 }

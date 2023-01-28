@@ -11,6 +11,9 @@ import uk.ac.ed.inf.service.RestaurantService;
 
 import static org.junit.Assert.assertNotEquals;
 
+/**
+ * Unit Testing for LngLat class
+ */
 public class LngLatTest extends TestCase {
 
     private LngLat p1;

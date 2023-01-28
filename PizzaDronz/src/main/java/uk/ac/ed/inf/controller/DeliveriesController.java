@@ -3,6 +3,7 @@ package uk.ac.ed.inf.controller;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import org.json.JSONObject;
 import uk.ac.ed.inf.domain.*;
 import uk.ac.ed.inf.service.OrderService;
 
@@ -53,5 +54,9 @@ public class DeliveriesController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static ArrayList<Deliveries> getDeliveries() {
+        return deliveries;
     }
 }

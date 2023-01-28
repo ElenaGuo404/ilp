@@ -10,6 +10,9 @@ import java.util.Arrays;
 
 import static org.junit.Assert.*;
 
+/**
+ * Integration Test for data reading module
+ */
 public class ServiceTest extends TestCase {
 
     protected String url;
