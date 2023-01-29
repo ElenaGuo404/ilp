@@ -43,15 +43,32 @@ public class AppTest extends TestCase
         flightPathController.getDeliveredPath();
         flightPathController.fileGenerator(date);
 
-        DeliveriesController.deliveriesConverter();
-        DeliveriesController.fileGenerator(date);
+    }
 
-        DroneController.getDailyMove();
-        DroneController.fileGenerator(date);
+
+    //checks the output flightpath json file has expected information
+    public void testFlightPathFile() throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode root = mapper.readTree(new File("/Users/jiayingguo/Desktop/st/flightpath-2023-01-01.json"));
+
+        int count = 0;
+        for (int i = 0; i < root.size(); i++){
+            for (FlightPath path : FlightPathController.getDeliveredOrderPath()){
+                if (root.get(i).toString().contains(String.valueOf(path.getFromLongitude()))
+                        && root.get(i).toString().contains(String.valueOf(path.getFromLatitude()))){
+                    count++;
+                    break;
+                }
+            }
+        }
+        assertEquals(FlightPathController.getDeliveredOrderPath().size(),count);
     }
 
     //checks the output deliveries json file has expected information
     public void testDeliveriesFile() throws IOException {
+        DeliveriesController.deliveriesConverter();
+        DeliveriesController.fileGenerator(date);
+
         ObjectMapper mapper = new ObjectMapper();
         JsonNode root = mapper.readTree(new File("/Users/jiayingguo/Desktop/st/deliveries-2023-01-01.json"));
 
@@ -67,26 +84,11 @@ public class AppTest extends TestCase
         assertEquals(DeliveriesController.getDeliveries().size(),count);
     }
 
-    //checks the output flightpath json file has expected information
-    public void testFlightPathFile() throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode root = mapper.readTree(new File("/Users/jiayingguo/Desktop/st/flightpath-2023-01-01.json"));
-
-        int count = 0;
-        for (int i = 0; i < root.size(); i++){
-            for (FlightPath path : FlightPathController.getDeliveredOrderPath()){
-                if (root.get(i).toString().contains(String.valueOf(path.getFromLongitude()))
-                    && root.get(i).toString().contains(String.valueOf(path.getFromLatitude()))){
-                    count++;
-                    break;
-                }
-            }
-        }
-        assertEquals(FlightPathController.getDeliveredOrderPath().size(),count);
-    }
-
     //checks the output drone geojson file has expected information
     public void testDroneFile() throws IOException {
+        DroneController.getDailyMove();
+        DroneController.fileGenerator(date);
+
         ObjectMapper mapper = new ObjectMapper();
         JsonNode root = mapper.readTree(new File("/Users/jiayingguo/Desktop/st/drone-2023-01-01.geojson"));
 
@@ -98,7 +100,7 @@ public class AppTest extends TestCase
         long startTime = System.currentTimeMillis();
         App.main(new String[]{date, url});
         long endTime = System.currentTimeMillis();
-        long runTime = startTime - endTime;
+        long runTime = endTime - startTime;
 
         System.out.println(runTime);
         assertTrue((maxRunTime - runTime) >= 0);
