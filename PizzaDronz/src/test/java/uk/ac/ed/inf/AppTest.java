@@ -42,7 +42,6 @@ public class AppTest extends TestCase
         FlightPathController flightPathController = new FlightPathController();
         flightPathController.getDeliveredPath();
         flightPathController.fileGenerator(date);
-
     }
 
 
@@ -95,6 +94,7 @@ public class AppTest extends TestCase
         assertEquals(mapper.readTree(DroneController.getFeatureCollection().toJson()), root);
     }
 
+    //checks the system run time is under 60 seconds
     public void testRuntime(){
 
         long startTime = System.currentTimeMillis();

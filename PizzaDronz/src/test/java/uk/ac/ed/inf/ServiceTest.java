@@ -4,14 +4,10 @@ import uk.ac.ed.inf.service.CentralAreaService;
 import uk.ac.ed.inf.service.NoFlyZoneService;
 import uk.ac.ed.inf.service.OrderService;
 import uk.ac.ed.inf.service.RestaurantService;
-
-import java.net.UnknownHostException;
 import java.util.Arrays;
 
-import static org.junit.Assert.*;
-
 /**
- * Integration Test for data reading module
+ * Integration Test for data reading modules
  */
 public class ServiceTest extends TestCase {
 

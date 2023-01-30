@@ -31,6 +31,7 @@ public class OrderOutcomeCheckTest extends TestCase {
         CentralAreaService.init("https://ilp-rest.azurewebsites.net");
     }
 
+    //unit level tests to ensure failure cases can be well found by system.
     public void testInvalidCardNumber() {
         order1 = OrderService.getListOrders()[0];
         check = new OrderOutcomeCheck(order1);
@@ -73,6 +74,7 @@ public class OrderOutcomeCheckTest extends TestCase {
         assertTrue(check.InvalidPizzaCombinationMultipleSuppliers());
     }
 
+    // two integration tests to ensure the order outcome assign module well perform.
     public void testAssignOrderOutcomeTrueCase(){
         orders = OrderService.getListOrders();
         int count = 0;
