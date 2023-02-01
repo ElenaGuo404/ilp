@@ -81,12 +81,12 @@ public class FlightPathController {
         }
 
         long ticksSinceStartOfCalculation = System.nanoTime();
-        LngLat hoover = path.getPathStartToEnd().get(path.getPathStartToEnd().size()-1);
+        LngLat hover = path.getPathStartToEnd().get(path.getPathStartToEnd().size()-1);
 
-        // hoover should have angle of null
-        flightPath.add(new FlightPath(orderNo, (float)hoover.getLng(),
-                (float)hoover.getLat(), NaN, (float)hoover.getLng(),
-                (float)hoover.getLat(), ticksSinceStartOfCalculation));
+        // hover should have angle of null
+        flightPath.add(new FlightPath(orderNo, (float)hover.getLng(),
+                (float)hover.getLat(), NaN, (float)hover.getLng(),
+                (float)hover.getLat(), ticksSinceStartOfCalculation));
 
             //from restaurant to Appleton Tower
         String lastOrder = sortedOrders.get(sortedOrders.size() - 1).getOrderNo();
@@ -108,11 +108,11 @@ public class FlightPathController {
         }
 
         long ticksSinceStartOfCalculation3 = System.nanoTime();
-        LngLat hoover2 = path.getPathEndToStart().get(path.getPathEndToStart().size()-1);
+        LngLat hover2 = path.getPathEndToStart().get(path.getPathEndToStart().size()-1);
 
-        flightPath.add(new FlightPath(orderNo, (float)hoover2.getLng(),
-                (float)hoover2.getLat(), NaN, (float)hoover2.getLng(),
-                (float)hoover2.getLat(), ticksSinceStartOfCalculation3));
+        flightPath.add(new FlightPath(orderNo, (float)hover2.getLng(),
+                (float)hover2.getLat(), NaN, (float)hover2.getLng(),
+                (float)hover2.getLat(), ticksSinceStartOfCalculation3));
 
         return flightPath;
     }
